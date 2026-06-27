@@ -1,0 +1,14 @@
+{
+  "name": "3mtt-packaging-node",
+  "version": "1.0.0",
+  "description": "Node.js packaging example for the 3MTT project",
+  "private": true,
+  "main": "node-app/app.js",
+  "scripts": {
+    "start": "node node-app/app.js",
+    "build": "node -e \"console.log('Node packaging bundle ready')\""
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

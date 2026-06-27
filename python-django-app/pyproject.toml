@@ -1,0 +1,15 @@
+[project]
+name = "3mtt-packaging-django"
+version = "1.0.0"
+description = "Python packaging example for the 3MTT project"
+requires-python = ">=3.11"
+dependencies = [
+  "django>=5.0,<5.1"
+]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["python-django-app"]
