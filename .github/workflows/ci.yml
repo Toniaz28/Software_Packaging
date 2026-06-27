@@ -20,14 +20,38 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - name: Validate Node package
+      - name: Node - install, test, build, pack
         run: |
           npm install
+          npm test
           npm run build
-      - name: Validate Python package
+          npm run pack-artifact
+      - name: Python - install deps and test
         run: |
           python -m pip install --upgrade pip
           pip install -r python-django-app/requirements.txt
-      - name: Validate Java package
+          pip install --upgrade build
+          pytest -q
+      - name: Python - build wheel and sdist
         run: |
-          mvn -f java-springboot-app/pom.xml package
+          pushd python-django-app
+          python -m build --sdist --wheel -o dist
+          popd
+      - name: Java - test and package
+        run: |
+          mvn -f java-springboot-app/pom.xml test package -DskipTests=false
+      - name: Generate checksums
+        run: |
+          python tools/checksums.py
+      - name: Verify checksums
+        run: |
+          python tools/checksums.py --verify
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: packaging-artifacts
+          path: |
+            *.tgz
+            java-springboot-app/target/*.jar
+            python-django-app/dist/*
+            artifacts/checksums.sha256

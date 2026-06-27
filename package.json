@@ -6,9 +6,15 @@
   "main": "node-app/app.js",
   "scripts": {
     "start": "node node-app/app.js",
-    "build": "node -e \"console.log('Node packaging bundle ready')\""
+    "build": "node -e \"console.log('Node packaging bundle ready')\"",
+    "test": "jest --runInBand",
+    "pack-artifact": "npm pack",
+    "checksums": "python tools/checksums.py"
   },
   "engines": {
     "node": ">=20"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0"
   }
 }
